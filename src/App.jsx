@@ -46,55 +46,55 @@ const App = () => {
               <Element name="t1">
                 <T1 />
               </Element>
-              <AnimatedWrapper delay={0.1}>
+       
                 <T2 />
-              </AnimatedWrapper>
+       
               
-              <AnimatedWrapper delay={0.2}>
+        
                 <T3 />
-              </AnimatedWrapper>
+         
               
               <Element name="ourservices">
-                <AnimatedWrapper delay={0.3}>
+              
                   <OurServices />
-                </AnimatedWrapper>
+              
               </Element>
               
-              <AnimatedWrapper delay={0.4}>
+         
                 <ChooseUs />
-              </AnimatedWrapper>
+        
               
               <Element name="latestblog">
-                <AnimatedWrapper delay={0.5}>
+             
                   <LatestBlog />
-                </AnimatedWrapper>
+            
               </Element>
               
-              <AnimatedWrapper delay={0.6}>
+        
                 <HowWeWork />
-              </AnimatedWrapper>
+        
               
               <Element name="consultationform">
-                <AnimatedWrapper delay={0.7}>
+        
                   <ConsultationForm />
-                </AnimatedWrapper>
+              
               </Element>
               
               <Element name="ts">
-                <AnimatedWrapper delay={0.8}>
+               >
                   <TeamSlider />
-                </AnimatedWrapper>
+               
               </Element>
               
               <Element name="faq">
-                <AnimatedWrapper delay={0.9}>
+       
                   <FAQ />
-                </AnimatedWrapper>
+      
               </Element>
               
-              <AnimatedWrapper delay={1}>
+     
                 <StartNow />
-              </AnimatedWrapper>
+     
             </>
           }
         />

@@ -11,7 +11,8 @@ const TeamSlider = () => {
       bio: "Ikra is the visionary leader behind the digital marketing company. As the Founder & Head of Digital Strategy, she ensures every project aligns with the latest industry trends and client needs. With experience working with 50+ clients, she has expertise in diverse industries.",
       expertise: ["Digital Strategy", "Client Insights", "Industry Trends"],
       icon: <Trophy className="w-6 h-6" />,
-      image: ikra, // Replace with Ikra's image URL
+      image: ikra,
+      linkedin: "https://www.linkedin.com/in/ikra-sheikh-875560277/"
     },
     {
       name: "Deepanshi",
@@ -19,7 +20,8 @@ const TeamSlider = () => {
       bio: "Deepanshi leads the marketing department, driving client conversions through innovative strategies. Her expertise in client acquisition transforms leads into loyal customers, delivering high-impact campaigns with measurable results.",
       expertise: ["Client Acquisition", "Campaign Strategy", "Marketing Leadership"],
       icon: <Target className="w-6 h-6" />,
-      image: deepa, // Replace with Deepanshi's image URL
+      image: deepa,
+       linkedin: "https://www.linkedin.com/in/deepanshi-arya-7a1985268/"
     },
   ];
 
@@ -73,10 +75,14 @@ const TeamSlider = () => {
 
                   {/* Social Icons */}
                   <div className="flex justify-center space-x-4 mt-6">
-                    <button className="p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                       <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                    >
                       <Linkedin className="w-5 h-5" />
-                    </button>
-                   
+                    </a>
                   </div>
                 </div>
               </CardContent>

@@ -71,14 +71,25 @@ const IndustryExpertise = () => {
             <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-20"></div>
           </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="mt-6 text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#003366] to-[#003366] bg-clip-text text-transparent"
-          >
-            Customized Solutions for All Industries
-          </motion.h2>
+      <motion.h2
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, delay: 0.2 }}
+  className="mt-6 text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#003366] to-[#003366] bg-clip-text text-transparent"
+>
+  {Array.from("Customized Solutions for All Industries").map((char, index) => (
+    <motion.span
+      key={index}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: index * 0.05, duration: 0.5 }}
+      className="inline-block"
+    >
+      {char}
+    </motion.span>
+  ))}
+</motion.h2>
+
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -113,25 +124,27 @@ const IndustryExpertise = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-80"></div>
 
                   <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                    <motion.div
-                      animate={{
-                        rotate: hoveredIndex === index ? 360 : 0,
-                      }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
-                      className="p-4 rounded-full bg-[#75cd32]"
-                    >
-                      <div className="text-white">
-                        {typeof industry.icon === "string" ? (
-                          <img
-                            src={industry.icon}
-                            alt={industry.name}
-                            className="w-10 h-10"
-                          />
-                        ) : (
-                          industry.icon
-                        )}
-                      </div>
-                    </motion.div>
+                   <motion.div
+  animate={{
+    y: hoveredIndex === index ? [-10, 10, -10] : 0,
+  }}
+  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+  whileHover={{ scale: 1.1, rotate: 360 }}
+  className="p-4 rounded-full bg-[#75cd32]"
+>
+  <div className="text-white">
+    {typeof industry.icon === "string" ? (
+      <img
+        src={industry.icon}
+        alt={industry.name}
+        className="w-10 h-10"
+      />
+    ) : (
+      industry.icon
+    )}
+  </div>
+</motion.div>
+
 
                     <div className="space-y-2">
                       <h3 className="text-xl font-bold text-white">

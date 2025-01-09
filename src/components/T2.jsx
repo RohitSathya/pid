@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   AcademicCapIcon,
   CameraIcon,
@@ -38,54 +38,35 @@ const IndustryExpertise = () => {
   ];
 
   const CardComponent = ({ industry, index }) => {
-    const cardRef = React.useRef(null);
-    const isInView = useInView(cardRef, { once: false, margin: "-100px" });
-    
-    const cardVariants = {
-      hidden: { 
-        opacity: 0,
-        y: 50,
-        scale: 0.9,
-        rotateX: 45
-      },
-      visible: { 
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        rotateX: 0,
-        transition: {
-          type: "spring",
-          damping: 20,
-          stiffness: 100,
-          delay: index * 0.1
-        }
-      }
-    };
-
     return (
       <motion.div
-        ref={cardRef}
-        variants={cardVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ 
+          opacity: 1, 
+          y: 0,
+          transition: {
+            duration: 0.5,
+            delay: index * 0.1
+          }
+        }}
+        viewport={{ once: true, margin: "-50px" }}
         whileHover={{ 
-          scale: 1.05,
-          rotateY: 5,
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+          scale: 1.03,
+          rotateY: 2,
+          transition: { duration: 0.3 }
         }}
         onHoverStart={() => setHoveredIndex(index)}
         onHoverEnd={() => setHoveredIndex(null)}
         className="transform-gpu"
       >
         <Link to={`/industry/${industry.dn}`}>
-          <div className="relative overflow-hidden rounded-xl bg-[#003366] p-6 shadow-lg transition-all duration-300">
+          <div className="relative overflow-hidden rounded-xl bg-[#003366] p-6 shadow-lg">
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-80"
+              className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"
               animate={{
-                background: hoveredIndex === index 
-                  ? "linear-gradient(to bottom right, rgba(255,255,255,0.2), transparent)"
-                  : "linear-gradient(to bottom right, rgba(255,255,255,0.1), transparent)"
+                opacity: hoveredIndex === index ? 0.9 : 0.7
               }}
+              transition={{ duration: 0.3 }}
             />
 
             <div className="relative z-10 flex flex-col items-center text-center space-y-4">
@@ -94,23 +75,19 @@ const IndustryExpertise = () => {
                   rotate: hoveredIndex === index ? 360 : 0,
                   scale: hoveredIndex === index ? 1.1 : 1,
                 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="p-4 rounded-full bg-[#75cd32]"
               >
                 <div className="text-white">
-                  {typeof industry.icon === "string" ? (
-                    <img src={industry.icon} alt={industry.name} className="w-10 h-10" />
-                  ) : (
-                    industry.icon
-                  )}
+                  {industry.icon}
                 </div>
               </motion.div>
 
               <motion.div
-                className="space-y-2"
                 animate={{
-                  y: hoveredIndex === index ? -5 : 0
+                  y: hoveredIndex === index ? -3 : 0
                 }}
+                transition={{ duration: 0.3 }}
               >
                 <h3 className="text-xl font-bold text-white">
                   {industry.name}
@@ -123,9 +100,9 @@ const IndustryExpertise = () => {
     );
   };
 
-  const headerY = useTransform(scrollY, [0, 300], [0, -50]);
-  const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
-  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const headerY = useTransform(scrollY, [0, 300], [0, -30]);
+  const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.7]);
+  const springConfig = { stiffness: 80, damping: 15 };
   const springY = useSpring(headerY, springConfig);
   const springOpacity = useSpring(headerOpacity, springConfig);
 
@@ -140,13 +117,10 @@ const IndustryExpertise = () => {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 20
-            }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
             className="relative inline-block"
           >
             <span className="bg-[#75cd32] text-white text-sm font-medium px-6 py-2 rounded-full">
@@ -154,11 +128,11 @@ const IndustryExpertise = () => {
             </span>
             <motion.div
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.2, 0.4, 0.2]
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.5, 0.3]
               }}
               transition={{
-                duration: 2,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
@@ -167,18 +141,20 @@ const IndustryExpertise = () => {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-6 text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#003366] to-[#003366] bg-clip-text text-transparent"
           >
             Customized Solutions for All Industries
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-6 text-xl text-gray-600 leading-relaxed max-w-4xl"
           >
             As Delhi's premier digital marketing agency, our expert team creates

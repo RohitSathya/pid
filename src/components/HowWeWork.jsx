@@ -11,7 +11,6 @@ const HowWeWork = () => {
       description:
         "The first step in our process is understanding your business, objectives, and target audience. We perform a thorough analysis of your existing digital presence, market conditions, and competitors.",
       icon: <Search />,
-      color: "from-blue-500 to-cyan-500",
       position: "left",
     },
     {
@@ -20,7 +19,6 @@ const HowWeWork = () => {
       description:
         "We analyze current trends, consumer behavior, and industry best practices to ensure we bring fresh, impactful strategies to the table.",
       icon: <Lightbulb />,
-      color: "from-purple-500 to-pink-500",
       position: "right",
     },
     {
@@ -29,7 +27,6 @@ const HowWeWork = () => {
       description:
         "Once the strategy is in place, we begin the optimization process. Whether it's optimizing your website for SEO, launching targeted ad campaigns, or curating engaging social media content.",
       icon: <TrendingUp />,
-      color: "from-orange-500 to-yellow-500",
       position: "left",
     },
     {
@@ -38,7 +35,6 @@ const HowWeWork = () => {
       description:
         "With all the pieces in place, we focus on achieving your business goals. By consistently monitoring and analyzing the performance of each campaign, we make data-driven adjustments.",
       icon: <Target />,
-      color: "from-green-500 to-emerald-500",
       position: "right",
     },
   ];
@@ -122,13 +118,9 @@ const HowWeWork = () => {
                       <CardContent className="p-6 md:p-8">
                         {/* Step Number */}
                         <div
-                          className={`absolute top-0 ${
-                            step.position === "left"
-                              ? "-right-16"
-                              : "-left-16"
-                          } bg-white w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg flex items-center justify-center font-bold text-lg md:text-2xl transform -translate-y-1/2 ${
-                            step.id === "01" ? "text-[#003366]" : "text-[#003366]"
-                          }`}
+                          className={`absolute top-[-1.5rem] left-1/2 transform -translate-x-1/2 md:translate-x-0 md:${
+                            step.position === "left" ? "left-[-2.5rem]" : "right-[-2.5rem]"
+                          } bg-white w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg flex items-center justify-center font-bold text-lg md:text-2xl text-[#003366]`}
                         >
                           {step.id}
                         </div>

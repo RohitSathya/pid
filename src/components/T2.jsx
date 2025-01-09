@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import {
   AcademicCapIcon,
   CameraIcon,
@@ -19,6 +19,8 @@ import {
 
 const IndustryExpertise = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const { scrollY } = useScroll();
+  
   const industries = [
     { name: "Photography", dn: "Photography", icon: <CameraIcon className="w-8 h-8" /> },
     { name: "Event Management", dn: "EventManagement", icon: <CalendarDaysIcon className="w-8 h-8" /> },
@@ -35,41 +37,134 @@ const IndustryExpertise = () => {
     { name: "Construction", dn: "Construction", icon: <WrenchScrewdriverIcon className="w-8 h-8 rotate-45" /> },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+  const CardComponent = ({ industry, index }) => {
+    const cardRef = React.useRef(null);
+    const isInView = useInView(cardRef, { once: false, margin: "-100px" });
+    
+    const cardVariants = {
+      hidden: { 
+        opacity: 0,
+        y: 50,
+        scale: 0.9,
+        rotateX: 45
+      },
+      visible: { 
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        transition: {
+          type: "spring",
+          damping: 20,
+          stiffness: 100,
+          delay: index * 0.1
+        }
+      }
+    };
+
+    return (
+      <motion.div
+        ref={cardRef}
+        variants={cardVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        whileHover={{ 
+          scale: 1.05,
+          rotateY: 5,
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+        }}
+        onHoverStart={() => setHoveredIndex(index)}
+        onHoverEnd={() => setHoveredIndex(null)}
+        className="transform-gpu"
+      >
+        <Link to={`/industry/${industry.dn}`}>
+          <div className="relative overflow-hidden rounded-xl bg-[#003366] p-6 shadow-lg transition-all duration-300">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-80"
+              animate={{
+                background: hoveredIndex === index 
+                  ? "linear-gradient(to bottom right, rgba(255,255,255,0.2), transparent)"
+                  : "linear-gradient(to bottom right, rgba(255,255,255,0.1), transparent)"
+              }}
+            />
+
+            <div className="relative z-10 flex flex-col items-center text-center space-y-4">
+              <motion.div
+                animate={{
+                  rotate: hoveredIndex === index ? 360 : 0,
+                  scale: hoveredIndex === index ? 1.1 : 1,
+                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="p-4 rounded-full bg-[#75cd32]"
+              >
+                <div className="text-white">
+                  {typeof industry.icon === "string" ? (
+                    <img src={industry.icon} alt={industry.name} className="w-10 h-10" />
+                  ) : (
+                    industry.icon
+                  )}
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="space-y-2"
+                animate={{
+                  y: hoveredIndex === index ? -5 : 0
+                }}
+              >
+                <h3 className="text-xl font-bold text-white">
+                  {industry.name}
+                </h3>
+              </motion.div>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    );
   };
 
-  const itemVariants = {
-    hidden: index => ({
-      x: index % 2 === 0 ? -100 : 100,
-      opacity: 0,
-    }),
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 80, damping: 10 },
-    },
-  };
+  const headerY = useTransform(scrollY, [0, 300], [0, -50]);
+  const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const springY = useSpring(headerY, springConfig);
+  const springOpacity = useSpring(headerOpacity, springConfig);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-blue-50 py-20">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-blue-50 py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          style={{
+            y: springY,
+            opacity: springOpacity
+          }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <div className="relative inline-block">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20
+            }}
+            className="relative inline-block"
+          >
             <span className="bg-[#75cd32] text-white text-sm font-medium px-6 py-2 rounded-full">
               Industry Expertise
             </span>
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-20"></div>
-          </div>
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.4, 0.2]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur"
+            />
+          </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -81,7 +176,7 @@ const IndustryExpertise = () => {
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="mt-6 text-xl text-gray-600 leading-relaxed max-w-4xl"
@@ -93,57 +188,11 @@ const IndustryExpertise = () => {
           </motion.p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {industries.map((industry, index) => (
-            <motion.div
-              key={index}
-              custom={index}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              onHoverStart={() => setHoveredIndex(index)}
-              onHoverEnd={() => setHoveredIndex(null)}
-            >
-              <Link to={`/industry/${industry.dn}`}>
-                <div className="relative overflow-hidden rounded-xl bg-[#003366] p-6 shadow-lg transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-80"></div>
-
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                    <motion.div
-                      animate={{
-                        rotate: hoveredIndex === index ? 360 : 0,
-                      }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
-                      className="p-4 rounded-full bg-[#75cd32]"
-                    >
-                      <div className="text-white">
-                        {typeof industry.icon === "string" ? (
-                          <img
-                            src={industry.icon}
-                            alt={industry.name}
-                            className="w-10 h-10"
-                          />
-                        ) : (
-                          industry.icon
-                        )}
-                      </div>
-                    </motion.div>
-
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-white">
-                        {industry.name}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+            <CardComponent key={index} industry={industry} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

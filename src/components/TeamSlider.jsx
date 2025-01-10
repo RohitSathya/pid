@@ -1,8 +1,8 @@
 import React from 'react';
-import { Linkedin, Twitter, Mail, Trophy, Target } from 'lucide-react';
+import { Linkedin, Trophy } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import ikra from '../images/1.png'
-import deepa from '../images/2.png'
+import ikra from '../images/1.png';
+
 const TeamSlider = () => {
   const teamMembers = [
     {
@@ -14,15 +14,6 @@ const TeamSlider = () => {
       image: ikra,
       linkedin: "https://www.linkedin.com/in/ikra-sheikh-875560277/"
     }
-    // {
-    //   name: "Deepanshi",
-    //   position: "Director of Marketing",
-    //   bio: "Deepanshi leads the marketing department, driving client conversions through innovative strategies. Her expertise in client acquisition transforms leads into loyal customers, delivering high-impact campaigns with measurable results.",
-    //   expertise: ["Client Acquisition", "Campaign Strategy", "Marketing Leadership"],
-    //   icon: <Target className="w-6 h-6" />,
-    //   image: deepa,
-    //    linkedin: "https://www.linkedin.com/in/deepanshi-arya-7a1985268/"
-    // },
   ];
 
   return (
@@ -34,39 +25,38 @@ const TeamSlider = () => {
             The Marketing Minds
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-           Our team of creative and strategic thinkers is dedicated to driving your brand’s success. With deep expertise in digital marketing, we craft customized strategies that deliver measurable results.
+            Our team of creative and strategic thinkers is dedicated to driving your brand’s success. With deep expertise in digital marketing, we craft customized strategies that deliver measurable results.
           </p>
         </div>
 
-        {/* Static Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {/* Static Card */}
+        <div className="flex justify-center">
           {teamMembers.map((member, index) => (
             <Card
               key={index}
-              className="bg-white/80 backdrop-blur-sm shadow-xl w-full max-w-sm mx-auto"
+              className="bg-white/80 backdrop-blur-sm shadow-xl w-full max-w-lg mx-auto"
             >
               <CardContent className="p-6">
                 <div className="relative flex flex-col items-center mb-6">
                   {/* Rounded Image */}
                   <img
                     src={member.image}
-                    
+                    alt={member.name}
                     className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-[#003366]"
                   />
-                
                 </div>
 
                 {/* Member Details */}
-                <div className="text-center mt-8">
+                <div className="text-center mt-4">
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">{member.name}</h3>
                   <p className="text-[#003366] font-medium mb-4">{member.position}</p>
                   <p className="text-gray-600 mb-6">{member.bio}</p>
 
-                  <div className="space-y-3">
+                  <div className="flex flex-wrap justify-center gap-2">
                     {member.expertise.map((skill, idx) => (
                       <span
                         key={idx}
-                        className="inline-block px-4 py-1 m-1 bg-[#75cd32]  text-white rounded-full text-sm"
+                        className="inline-block px-4 py-1 bg-[#75cd32] text-white rounded-full text-sm"
                       >
                         {skill}
                       </span>
@@ -75,7 +65,7 @@ const TeamSlider = () => {
 
                   {/* Social Icons */}
                   <div className="flex justify-center space-x-4 mt-6">
-                       <a
+                    <a
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"

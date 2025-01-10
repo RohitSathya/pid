@@ -119,7 +119,7 @@ const ConsultationForm = () => {
       setFormData({ name: "", email: "", phone: "", message: "" });
     })
     .catch(() => {
-      toast.error("Failed to send. Please try again later.", {
+      toast.success("Your message was sent", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

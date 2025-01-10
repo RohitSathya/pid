@@ -128,7 +128,9 @@ const ConsultationForm = () => {
         draggable: true,
         theme: "colored",
       });
+        setFormData({ name: "", email: "", phone: "", message: "" });
     })
+    
     .finally(() => setLoading(false));
 };
 

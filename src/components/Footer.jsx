@@ -66,8 +66,8 @@ const Footer = () => {
             <h2 className="text-3xl font-extrabold text-gray-800 mb-4 whitespace-nowrap">
               IKD Marketing
             </h2>
-            <p className="text-gray-600 mb-6">
-              We specialize in driving online success with digital marketing services that cover SEO, social media, content, and paid ads.
+             <p className="text-gray-600 mb-6">
+              We specialize in driving online success with digital marketing services that cover SEO, social media, content, and paid ads. Our goal is to improve your online presence and help you reach the right audience with the right strategy, ensuring growth and results that matter.
             </p>
             <div className="flex space-x-4">
               {/* Social Media Links */}

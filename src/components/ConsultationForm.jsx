@@ -72,65 +72,56 @@ const ConsultationForm = () => {
     return true;
   };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  if (!validateForm()) {
-    return; // Stop submission if validation fails
-  }
+    if (!validateForm()) {
+      return; // Stop submission if validation fails
+    }
 
-  setLoading(true);
+    setLoading(true);
 
-  const emailParams = {
-    name: formData.name,
-    email: formData.email,
-    phone: formData.phone,
-    message: formData.message,
+    const emailParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+    };
+
+    emailjs
+      .send(
+        "service_6ztxc8g", // Replace with your EmailJS service ID
+        "template_gqh7qxu", // Replace with your EmailJS template ID
+        emailParams,
+        "yVNXoiryRF-4YH2Mi" // Replace with your EmailJS public API key
+      )
+      .then(
+        (result) => {
+          toast.success("Your message was sent successfully!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+          });
+          setFormData({ name: "", email: "", phone: "", message: "" });
+        },
+        (error) => {
+          toast.error("Failed to send email. Please try again later.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+          });
+        }
+      )
+      .finally(() => setLoading(false));
   };
-
-  // EmailJS Account 1
-  const sendEmail1 = emailjs.send(
-    "service_6ztxc8g", 
-    "template_gqh7qxu",
-    emailParams,
-    "yVNXoiryRF-4YH2Mi" 
-  );
-
-  // EmailJS Account 2
-  const sendEmail2 = emailjs.send(
-    "service_dra4h5z", 
-    "template_9wt461v", 
-    emailParams,
-    "JEdkAUNXPC1eoXGTt" 
-  );
-
-  // Execute both requests in parallel
-  Promise.all([sendEmail1, sendEmail2])
-    .then(() => {
-      toast.success("Your message was sent", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-      });
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    })
-    .catch(() => {
-      toast.error("Failed to send. Please try again later.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-      });
-    })
-    .finally(() => setLoading(false));
-};
 
   return (
     <div className="min-h-screen bg-white p-4 flex items-center justify-center">

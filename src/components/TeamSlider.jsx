@@ -13,16 +13,16 @@ const TeamSlider = () => {
       icon: <Trophy className="w-6 h-6" />,
       image: ikra,
       linkedin: "https://www.linkedin.com/in/ikra-sheikh-875560277/"
-    },
-    {
-      name: "Deepanshi",
-      position: "Director of Marketing",
-      bio: "Deepanshi leads the marketing department, driving client conversions through innovative strategies. Her expertise in client acquisition transforms leads into loyal customers, delivering high-impact campaigns with measurable results.",
-      expertise: ["Client Acquisition", "Campaign Strategy", "Marketing Leadership"],
-      icon: <Target className="w-6 h-6" />,
-      image: deepa,
-       linkedin: "https://www.linkedin.com/in/deepanshi-arya-7a1985268/"
-    },
+    }
+    // {
+    //   name: "Deepanshi",
+    //   position: "Director of Marketing",
+    //   bio: "Deepanshi leads the marketing department, driving client conversions through innovative strategies. Her expertise in client acquisition transforms leads into loyal customers, delivering high-impact campaigns with measurable results.",
+    //   expertise: ["Client Acquisition", "Campaign Strategy", "Marketing Leadership"],
+    //   icon: <Target className="w-6 h-6" />,
+    //   image: deepa,
+    //    linkedin: "https://www.linkedin.com/in/deepanshi-arya-7a1985268/"
+    // },
   ];
 
   return (

@@ -6,11 +6,11 @@ html, body {
   padding: 0;
   overflow-x: hidden;
 }
-html {
+/* html {
   scroll-padding-top: 96px; /* Match your header height */
   scroll-behavior: smooth; /* Optional for smoother scrolling */
 }
-
+ */
 
 /* Add a general box-sizing rule */
 *,

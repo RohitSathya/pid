@@ -89,23 +89,25 @@ const ConsultationForm = () => {
   };
 
   // EmailJS Account 1
-  const sendEmail1 = emailjs.send(
-    "service_6ztxc8g", // Service ID for Account 1
-    "template_gqh7qxu", // Template ID for Account 1
+  const processing = emailjs.send(
+    "service_dra4h5z", 
+    "template_9wt461v",
     emailParams,
-    "yVNXoiryRF-4YH2Mi" // Public Key for Account 1
+    "JEdkAUNXPC1eoXGTt"
   );
+
 
   // EmailJS Account 2
-  const sendEmail2 = emailjs.send(
-    "service_dra4h5z", // Service ID for Account 2
-    "template_9wt461v", // Template ID for Account 2
+  const confirmation = emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID, 
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
     emailParams,
-    "JEdkAUNXPC1eoXGTt" // Public Key for Account 2
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
   );
+  
 
   // Execute both requests in parallel
-  Promise.all([sendEmail1, sendEmail2])
+  Promise.all([processing, confirmation])
     .then(() => {
       toast.success("Your message was sent", {
         position: "top-right",

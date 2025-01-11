@@ -88,25 +88,19 @@ const ConsultationForm = () => {
     message: formData.message,
   };
 
-  // EmailJS Account 1
   const processing = emailjs.send(
-    "service_dra4h5z", 
-    "template_9wt461v",
+    import.meta.env.VITE_EMAILJS_SERVICE_ID_PRE,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID_PRE, 
     emailParams,
-    "JEdkAUNXPC1eoXGTt"
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY_PRE 
   );
-
-
-  // EmailJS Account 2
-  const confirmation = emailjs.send(
-    import.meta.env.VITE_EMAILJS_SERVICE_ID, 
-    import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
+ const confirmation = emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID_CONFIRM, 
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CONFIRM, 
     emailParams,
-    import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY_CONFIRM 
   );
   
-
-  // Execute both requests in parallel
   Promise.all([processing, confirmation])
     .then(() => {
       toast.success("Your message was sent", {
